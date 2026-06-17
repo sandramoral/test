@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chall's Stages of Reading Development</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .stage-card { transition: all 0.3s ease; }
+        .stage-card:hover { transform: translateY(-5px); }
+        .tab-button.active { border-bottom: 2px solid #2563eb; color: #2563eb; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans min-h-screen">
+
+    <div class="max-w-4xl mx-auto p-6 md:p-12">
+        <header class="mb-12 text-center">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-blue-700 mb-4">Reading Development</h1>
+            <p class="text-xl text-slate-600">Mastering the path from decoding to critical reconstruction.</p>
+        </header>
+
+        <!-- Lesson Stages -->
+        <div id="lesson-section" class="mb-16">
+            <h2 class="text-2xl font-bold mb-6 text-slate-800">The Six Stages</h2>
+            <div id="stage-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </div>
+
+        <div id="quiz-section" class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200">
+            <h2 class="text-2xl font-bold mb-6">Knowledge Assessment</h2>
+            
+            <div id="quiz-container">
+                <!-- Multiple Choice -->
+                <div id="mc-q" class="mb-8">
+                    <p class="font-medium text-lg mb-4">1. Which stage describes the "reading to learn" phase often associated with middle school?</p>
+                    <div class="space-y-2">
+                        <button onclick="checkMC(1)" class="w-full text-left p-3 rounded-lg bg-slate-100 hover:bg-blue-50 transition">Stage 1</button>
+                        <button onclick="checkMC(2)" class="w-full text-left p-3 rounded-lg bg-slate-100 hover:bg-blue-50 transition">Stage 2</button>
+                        <button onclick="checkMC(3)" class="w-full text-left p-3 rounded-lg bg-slate-100 hover:bg-blue-50 transition font-semibold text-blue-700">Stage 3</button>
+                        <button onclick="checkMC(4)" class="w-full text-left p-3 rounded-lg bg-slate-100 hover:bg-blue-50 transition">Stage 4</button>
+                    </div>
+                </div>
+
+                <!-- Fill in the blank -->
+                <div id="fitb-q" class="mb-8">
+                    <p class="font-medium text-lg mb-4">2. The stage defined by "ungluing from print" and achieving fluency is Stage <input type="text" id="fitb-input" class="border-b-2 border-slate-400 w-12 text-center focus:outline-none focus:border-blue-500" />.</p>
+                    <button onclick="checkFITB()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Submit Answer</button>
+                </div>
+            </div>
+            <p id="quiz-feedback" class="font-semibold text-center"></p>
+        </div>
+
+        <div id="discussion-section" class="mt-12 p-8 bg-blue-50 rounded-2xl border border-blue-100">
+            <h2 class="text-2xl font-bold mb-4 text-blue-900">Discussion</h2>
+            <p class="text-blue-800 mb-6 italic">
+                "Chall argues that Stage 5 (Reconstruction) involves the synthesis and critical evaluation of information, rather than just absorbing facts. In what ways does moving beyond 'reading to learn' (Stage 3) and into 'critical reconstruction' empower you not just as a student, but as an informed participant in your future professional field and civic life?"
+            </p>
+            <textarea id="discussion-area" class="w-full h-32 p-4 rounded-lg border border-blue-200 focus:ring-2 focus:ring-blue-400 outline-none" placeholder="Type your reflection here..."></textarea>
+            <button onclick="saveDiscussion()" class="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700">Submit Reflection</button>
+        </div>
+    </div>
+
+    <script>
+        const stages = [
+            { title: "Stage 0", desc: "Pre-reading: Print awareness, 'pretend' reading." },
+            { title: "Stage 1", desc: "Initial Reading: Decoding, alphabetic principle." },
+            { title: "Stage 2", desc: "Fluency: 'Ungluing from print', increased speed." },
+            { title: "Stage 3", desc: "Reading to Learn: Reading for new info/concepts." },
+            { title: "Stage 4", desc: "Multiple Viewpoints: Handling layered perspectives." },
+            { title: "Stage 5", desc: "Reconstruction: Synthesis and critical evaluation." }
+        ];
+
+        function init() {
+            const grid = document.getElementById('stage-grid');
+            stages.forEach(s => {
+                grid.innerHTML += `
+                    <div class="stage-card bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                        <h3 class="font-bold text-blue-700">${s.title}</h3>
+                        <p class="mt-2 text-slate-600 text-sm">${s.desc}</p>
+                    </div>
+                `;
+            });
+        }
+
+        function checkMC(val) {
+            const feedback = document.getElementById('quiz-feedback');
+            if(val === 3) {
+                feedback.innerText = "Correct! Stage 3 is the bridge where reading becomes a tool for learning.";
+                feedback.className = "font-semibold text-center text-green-600";
+            } else {
+                feedback.innerText = "Try again! Think about the middle school transition.";
+                feedback.className = "font-semibold text-center text-red-600";
+            }
+        }
+
+        function checkFITB() {
+            const input = document.getElementById('fitb-input').value;
+            const feedback = document.getElementById('quiz-feedback');
+            if(input === "2") {
+                feedback.innerText = "Correct! Fluency is essential for moving past word-by-word decoding.";
+                feedback.className = "font-semibold text-center text-green-600";
+            } else {
+                feedback.innerText = "Not quite. Check the stage description above!";
+                feedback.className = "font-semibold text-center text-red-600";
+            }
+        }
+
+        function saveDiscussion() {
+            const text = document.getElementById('discussion-area').value;
+            if (text.length > 20) {
+                alert("Thank you for your thoughtful reflection! Your contribution has been noted.");
+            } else {
+                alert("Please write a bit more so we can capture your thoughts!");
+            }
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
