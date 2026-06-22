@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Theory Navigator: Child Development</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; max-width: 800px; margin: 20px auto; padding: 20px; background: #f4f7f6; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        button { background: #0056b3; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #004494; }
+        #feedback { font-weight: bold; margin-top: 10px; color: #d9534f; }
+    </style>
+</head>
+<body>
+
+    <h1>Theory Navigator: Foundations</h1>
+    <p>Welcome, future educators. Match the theorist to their core developmental focus.</p>
+
+    <div class="card">
+        <label for="theorist"><strong>Select a Theorist:</strong></label>
+        <select id="theorist">
+            <option value="">--Choose--</option>
+            <option value="piaget">Jean Piaget</option>
+            <option value="vygotsky">Lev Vygotsky</option>
+            <option value="erikson">Erik Erikson</option>
+        </select>
+        
+        <p><strong>Which concept matches?</strong></p>
+        <div id="options">
+            <button onclick="checkAnswer('piaget', 'stages')">Cognitive Stages of Development</button>
+            <button onclick="checkAnswer('vygotsky', 'zpd')">Zone of Proximal Development</button>
+            <button onclick="checkAnswer('erikson', 'identity')">Psychosocial Identity Stages</button>
+        </div>
+        <div id="feedback"></div>
+    </div>
+
+    <div id="detail" class="card" style="display:none;">
+        <h2 id="theory-title"></h2>
+        <p id="theory-desc"></p>
+    </div>
+
+    <script>
+        const data = {
+            piaget: { title: "Jean Piaget: Cognitive Development", desc: "Focuses on how children construct a mental model of the world. Key takeaway: Students learn through active exploration and moving through distinct biological stages." },
+            vygotsky: { title: "Lev Vygotsky: Social Development", desc: "Emphasizes that social interaction plays a fundamental role in the development of cognition. The 'Zone of Proximal Development' (ZPD) is the sweet spot for learning with a mentor." },
+            erikson: { title: "Erik Erikson: Psychosocial Development", desc: "Proposes that personality develops in predetermined stages, with a focus on resolving 'crises' (e.g., Identity vs. Role Confusion) at different ages." }
+        };
+
+        function checkAnswer(theorist, concept) {
+            const feedback = document.getElementById('feedback');
+            const detail = document.getElementById('detail');
+            const select = document.getElementById('theorist');
+            
+            if (select.value === theorist) {
+                feedback.style.color = "green";
+                feedback.innerText = "Correct! See details below.";
+                document.getElementById('theory-title').innerText = data[theorist].title;
+                document.getElementById('theory-desc').innerText = data[theorist].desc;
+                detail.style.display = "block";
+            } else {
+                feedback.innerText = "Try matching the correct dropdown selection with the button.";
+            }
+        }
+    </script>
+</body>
+</html>
